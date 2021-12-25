@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Performance Quality Predictor</title>
+  </head>
+  <body>
+    <div class="container" style="border-width: 2px">
+      <h1>Performance Quality Predictor</h1>
+      <form id="api-form">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="asn-input-label">ASN</span>
+          </div>
+          <input id="asn-input" type="text" class="form-control" placeholder="ASN" aria-label="ASN" aria-describedby="asn-input-label" value="3352">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="country-code-input-label">Country Code</span>
+          </div>
+          <input id="country-code-input" type="text" class="form-control" placeholder="Country Code" aria-label="Country Code" aria-describedby="country-code-input-label" value="us">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="browser-name-input-label">Browser Name</span>
+          </div>
+          <input id="browser-name-input" type="text" class="form-control" placeholder="Browser Name" aria-label="Browser Name" aria-describedby="browser-name-input-label" value="chrome">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="browser-major-version-input-label">Browser Major Version</span>
+          </div>
+          <input id="browser-major-version-input" type="text" class="form-control" placeholder="Browser Major Version" aria-label="Browser Major Version" aria-describedby="browser-major-version-input-label" value="96">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="os-family-input-label">OS Family</span>
+          </div>
+          <input id="os-family-input" type="text" class="form-control" placeholder="OS Family" aria-label="OS Family" aria-describedby="os-family-input-label" value="android">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="os-major-version-input-label">OS Major Version</span>
+          </div>
+          <input id="os-major-version-input" type="text" class="form-control" placeholder="OS Major Version" aria-label="OS Major Version" aria-describedby="os-major-version-input-label" value="11">
+        </div>
+        <button id="form-submit" type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <div class="container">
+      <h2>Prediction Result</h2>
+      <div class="row">
+        <p><span class="fw-bold">API Url</span>: <span id="api-url"></span></p>
+      </div>
+      <div class="row">
+        <p><span class="fw-bold">JSON</span>: <span id="api-result"></span></p>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="/predictor-client.js"> </script>
+  </body>
+</html>
