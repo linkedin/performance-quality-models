@@ -1,23 +1,29 @@
 # Personalize Performance with Performance Quality Models
 
-Performance Quality Model (or PQM in short) is a deep neural network model with a bold goal to predict the page load time (PLT) class of any web page. Just like [netinfo’s effective type attribute](https://wicg.github.io/netinfo/#effectivetype-attribute), this predicts the PLT class of any web request as good / poor. Their difference is explained in the FAQ section below. As PQM uses both device and network characteristics while predicting the PLT class, it can be used to build, tricky to otherwise implement, impactful application features. Some example are,
+Performance Quality Models (or PQM in short) are a collection of AI models with a bold goal to predict various performance proxies (e.g. page load time (PLT) class) of any web page. Just like [netinfo’s effective type attribute](https://wicg.github.io/netinfo/#effectivetype-attribute), they predict, say the PLT class of any web request as good / poor. Their difference is explained in the FAQ section below. As PQMs use both device and network characteristics while predicting the PLT (or any proxy) class, it can be used to build, tricky to otherwise implement, impactful application features. Some example are,
 1. Dynamically adjust the quality of images based on the current PLT class. Read [this blog](https://www.linkedin.com/pulse/personalizing-performance-adapting-application-real-time-pasumarthy) to learn more about our experience and results.
 2. Disable autoplay of videos on feed or elsewhere for slow devices
 3. Reduce the size of payload for poorer networks [[1](https://www.algolia.com/blog/engineering/netinfo-api-algolia-javascript-client/)]
 
-This model file can be treated like any other 3rd party library and imported into your [Python](/ssr-mobile-web/mweb-may-2020-v1/python-example) or [node.js](ssr-mobile-web/mweb-may-2020-v1/nodejs-example) backends. Theoretically, this model file can also be imported in your client side JavaScript code just like any other assets. We do not show that approach here, but please reach out to us if that suits your use case better.
+These model files are binaries that can be imported into your [Python](/ssr-mobile-web/mweb-jan-2022-v1/python-example) or [node.js](ssr-mobile-web/mweb-jan-2022-v1/nodejs-example) backends. Theoretically, this model file can also be imported in your client side JavaScript code just like any other assets. We do not show that approach here, but please reach out to us if that suits your use case better.
 
-This is our first attempt to open source a ML model trained on LinkedIn’s performance data of billions of page views around the world. Please share your experiences using this in the [discussion forum](https://github.com/linkedin/performance-quality-models/discussions).
+This is our first attempt to open source a ML model trained on LinkedIn’s performance data of millions of page views around the world. Please share your experiences using this in the [discussion forum](https://github.com/linkedin/performance-quality-models/discussions).
 
 ## Currently Supported Models
 
-Go to the corresponding folders of each model to see how to use them, how they were built and other useful information. We will continue to update this list as we build and test new models thoroughly.
+Go to the corresponding folders of each model to see how to use them, how they were built and other useful information. We will continue to update this list as we build and test new models thoroughly. 
 
-### SSR Mobile Web
-- Mweb-May-2020-v1
+### SSR / Static Files on Mobile Web
+
+If you use server side rendering or static file server techniques to serve your mobile web traffic, you can use these models. 
+
+- [mweb-jan-2022-v1](ssr-mobile-web/mweb-jan-2022-v1/)
 
 ## Tech Talks & Blogs 
-<< add resources on personalizing performance >>
+- How LinkedIn uses AI to optimize performance for every member​ at Facebook Performance Summit in 2019 - [slides](https://microsoft-my.sharepoint.com/:p:/g/personal/pvijayan_linkedin_biz/Ebt_xi0Yf7NBszIUAj9RmGkBKnssSp2qAQF0Qy0qdLJvPw?e=dw1Eov) | [recording](https://www.youtube.com/watch?v=4A13Pzal8Hg)
+- [Understanding network quality: The rise of customized content delivery](https://engineering.linkedin.com/blog/2019/06/understanding-network-quality--the-rise-of-customized-content-de)
+- [Personalizing Performance: Adapting Application in real time to member environments](https://www.linkedin.com/pulse/personalizing-performance-adapting-application-real-time-pasumarthy/)
+- [Discussions with W3C on the future of Netinfo](https://docs.google.com/document/d/1GQpM8IvL4feXQ0oQdCQIPKhZZkMLNTYJQhBUntMxPkI/edit#heading=h.rudaey4ntcqb)
 
 ## FAQs
 
@@ -29,9 +35,9 @@ NetInfo has privacy concerns and not a standard web API yet. It is not available
 
 Having said that, we plan to include real time network measurements as inputs to the model in the future to further improve its accuracy.
 
-**2. I’m new to ML and not sure if Linkedin’s PQM models would work for my company’s problems. How can I quickly verify this?**
+**2. I’m new to ML and not sure if Linkedin’s PQMs would work for my company’s problems. How can I quickly verify this?**
 
-PQM models, though trained on LinkedIn data, capture users’ devices and network conditions all around the world. As we did not use any crucial and private information to LinkedIn to either train or test them, we believe the models captured the general network and device characteristics of users. These characteristics would not change much whether a user visits linkedin.com or medium.com on the same device and from the same place. Just like any 3rd party software, give it a try on your own data, check its performance and report any problems in the issue tab. It is very simple to try these models. Please see “how to use” sections of each model for more information.
+PQMs, though trained on LinkedIn data, capture users’ devices and network conditions all around the world. As we did not use any crucial and private information to LinkedIn to either train or test them, we believe the models captured the general network and device characteristics of users. These characteristics would not change much whether a user visits linkedin.com or medium.com on the same device and from the same place. Just like any 3rd party software, give it a try on your own data, check its performance and report any problems in the issue tab. It is very simple to try these models. Please see “how to use” sections of each model for more information.
 
 If you wish to customize the model, techniques like transfer learning can be used. With transfer learning, you can further fine tune and retrain the model on your own performance datasets. As the model already has a general sense of performance, fine tuning wouldn’t need a lot of data of training infrastructure.
 
@@ -50,14 +56,13 @@ Yes. The model was deployed as a standalone service within LinkedIn and was used
 
 We actively monitor the accuracy of the model on a daily basis and will continue to publish new versions whenever we see a drop in those metrics.
 
-## Troubleshooting
-TODO
-
 ## License
 [BSD-2 Clause](https://github.com/linkedin/performance-quality-models/blob/main/LICENSE)
 
 ## Open Source Software Used
+```
 Tensorflow
 https://github.com/tensorflow/tensorflow
 Copyright 2019 The TensorFlow Authors
-License:Apache License 2.0
+License: Apache License 2.0
+```
