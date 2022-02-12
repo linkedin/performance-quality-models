@@ -1,6 +1,6 @@
 # Personalize Performance with Performance Quality Models
 
-Performance Quality Models (or PQM in short) are a collection of AI models with a bold goal to predict various performance proxies (e.g. page load time (PLT) class) of any web page. Just like [netinfo’s effective type attribute](https://wicg.github.io/netinfo/#effectivetype-attribute), they predict, say the PLT class of any web request as good / poor. Their difference is explained in the FAQ section below. As PQMs use both device and network characteristics while predicting the PLT (or any proxy) class, it can be used to build, tricky to otherwise implement, impactful application features. Some example are,
+Performance Quality Models (or PQM in short) are a collection of AI models with a bold goal to predict various performance proxies (e.g. page load time (PLT) class) of any web page. Just like [netinfo’s effective type attribute](https://wicg.github.io/netinfo/#effectivetype-attribute), they predict, say the PLT class of any web request as good / poor. Their difference is explained in the FAQ section below. As PQMs use both device and network characteristics while predicting the PLT (or any proxy) class, it can be used to build impactful application features that are otherwise tricky to implement. Some examples are:
 1. Dynamically adjust the quality of images based on the current PLT class. Read [this blog](https://www.linkedin.com/pulse/personalizing-performance-adapting-application-real-time-pasumarthy) to learn more about our experience and results.
 2. Disable autoplay of videos on feed or elsewhere for slow devices
 3. Reduce the size of payload for poorer networks [[1](https://www.algolia.com/blog/engineering/netinfo-api-algolia-javascript-client/)]
@@ -50,11 +50,11 @@ Feel free to file an issue if you want more advice or help on any of the above s
 NetInfo, an experimental API available on Chromium based browsers uses on-device measurements to estimate the future throughput and RTT of network requests. Page Speed Predictor on the other hand estimates the overall page load performance which includes network, server and client latencies. So there is no apples to apples comparison and depends on the use case of how the prediction is used.
 
 **4. Is this model currently being used at LinkedIn? If so, what is it being used for? If not, why not?**
-Yes. The model was deployed as a standalone service within LinkedIn and was used by Lite to decide the resolution of images on feed. We shared our experiences and early results at multiple venues like Facebook's Performance Summit in 2019 and Ray Summit in 2020.
+[Lite, the global mobile web offering of LinkedIn](https://engineering.linkedin.com/blog/2018/03/linkedin-lite--a-lightweight-mobile-web-experience), uses PQM to decide the resolution of images on feed today in realtime for every request. We shared our experiences and early results at multiple venues like Facebook's Performance Summit in 2019 and Ray Summit in 2020.
 
-**5. The model in the git repository was last updated in May 2020. When will it next be updated?**
+**5. The model in the git repository was last updated in Jan 2022. When will it next be updated?**
 
-We actively monitor the accuracy of the model on a daily basis and will continue to publish new versions whenever we see a drop in those metrics.
+We actively monitor the accuracy of the model on a daily basis and will continue to publish new versions whenever we see a drop in those metrics. We can encourage you to open an issue if you see a drop in model's performance.
 
 ## License
 [BSD-2 Clause](https://github.com/linkedin/performance-quality-models/blob/main/LICENSE)
