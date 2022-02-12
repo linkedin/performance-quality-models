@@ -13,16 +13,18 @@ The model was built and trained from around 25M random samples of LinkedIn Lite�
 | OS version | Major version number of the OS | 14, 8 |
 | Browser | Name of browser | Chrome, Safari |
 | Browser version | Major version number of the browser | 14, 74 |
-| ASN number | [Autonomous System Number](https://en.wikipedia.org/wiki/Autonomous_system_(Internet)), like ISP. Check the code example on how to obtain this from IP address | “7922” |
+| ASN number | [Autonomous System Number](https://en.wikipedia.org/wiki/Autonomous_system_(Internet)), like your Internet Service Provider | “7922” |
 
 OS and browser info is extracted from the user agent using the [UA Parser library](https://mvnrepository.com/artifact/com.github.ua-parser/uap-java/1.4.3). Using any other way to extract this information may work but it may lead to [train-serve data skew](https://www.tensorflow.org/tfx/data_validation/get_started#checking_data_skew_and_drift).
+
+Using [Digital Element](https://www.digitalelement.com/resources/faq/)'s Jan 2022 database, we extracted ASN numbers from IP Address. You may have to purchase their license to be absolutely match to what we did. However, any such accurate translation service should work. While trying out our demos, use any free website like [this one](https://hackertarget.com/as-ip-lookup/) or [this one](https://mxtoolbox.com/asn.aspx) to obtain the ASN number for the IP Address of your interest. 
 
 ### Model Output
 
 The model is trained to return the page load time class. For now, we have two classes:
 
-1. Less than 1200ms and
-2. Greater than or equal to 1200ms, 
+1. Less than 1300ms and
+2. Greater than or equal to 1300ms, 
 
 but we may expand them to more classes in the future based on the use cases. As shown in the [ssr-mobile-web-modile-demo.pynb](python-example/ssr-mobile-web-model-demo.ipynb) example, the [TF predictor](https://github.com/tensorflow/tensorflow/blob/63f17d0fe1192eff0aa47faae5d15ec7aa02490a/tensorflow/python/saved_model/load.py#L850) returns a probability distribution of these PLT classes. We could simply pick the class with the highest probability as the model’s prediction. SavedModels from Estimators section from this [guide](https://github.com/tensorflow/docs/blob/e9f1ce05852b13e9335860d93aa28f0782b60ddc/site/en/guide/estimator.ipynb) is another end to end example of this pattern.
 
