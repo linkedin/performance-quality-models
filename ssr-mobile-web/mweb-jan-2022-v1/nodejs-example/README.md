@@ -1,8 +1,8 @@
-# Nodejs with SSR Mobile Web May 2020 Model V1
+# Nodejs with SSR Mobile Web Jan 2022 Model V1
 
 This is a simple example to show how to create an API that makes
 performance quality predictions using Expressjs with Nodejs. It
-uses the SSR Mobile Web May 2020 V1 model.
+uses the SSR Mobile Web Jan 2022 V1 model.
 
 ## How to Run the Example
 
