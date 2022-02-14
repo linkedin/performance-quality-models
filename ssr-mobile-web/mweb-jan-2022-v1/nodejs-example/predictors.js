@@ -69,7 +69,7 @@ class PredictorBase {
   }
 }
 
-class MWebMay2020Predictor extends PredictorBase {
+class MWebJan2022Predictor extends PredictorBase {
   constructor(modelDir) {
     super(modelDir);
     this._features = [
@@ -78,31 +78,21 @@ class MWebMay2020Predictor extends PredictorBase {
       "browser_major_version_na",
       "browser_name",
       "country_code",
-      "dataCenter",
-      "osFamily",
-      "osMajor",
-      "osMajor_na",
-      "popId"
+      "osfamily",
+      "osmajor",
+      "osmajor_na"
     ];
     this._defaults = {
-      browser_major_version: 75.0,
-      osMajor: 11.0,
-      asn_number: "**",
-      country_code: "**",
-      browser_name: "**",
-      osFamily: "**",
-      popId: "**",
-      dataCenter: "**"
+      "browser_major_version": 15.0,
+      "osmajor": 14.0,
+      "asn_number": '**',
+      "country_code": '**',
+      "browser_name": '**',
+      "osfamily": '**'
     };
     this._normalizer = {
-      means: {
-        browser_major_version: 776.7030035555556,
-        osMajor: 10.416319973334147
-      },
-      stds: {
-        browser_major_version: 120559.96265890554,
-        osMajor: 2.4117271070878434
-      }
+      "means": { "browser_major_version": 52.65782220933843, "osmajor": 13.372263709715911 },
+      "stds": { "browser_major_version": 41.48294747389074, "osmajor": 2.376855002582524 }
     };
   }
 
@@ -143,14 +133,14 @@ class MWebMay2020Predictor extends PredictorBase {
 
   _addNAFetaures(x) {
     x.browser_major_version_na = "False";
-    x.osMajor_na = "False";
+    x.osmajor_na = "False";
 
     if (this._checkNA(x.browser_major_version)) {
       x.browser_major_version_na = "True";
     }
 
-    if (this._checkNA(x.osMajor)) {
-      x.osMajor_na = "True";
+    if (this._checkNA(x.osmajor)) {
+      x.osmajor_na = "True";
     }
     return x;
   }
@@ -167,4 +157,4 @@ class MWebMay2020Predictor extends PredictorBase {
   }
 }
 
-module.exports = { MWebMay2020Predictor };
+module.exports = { MWebJan2022Predictor };

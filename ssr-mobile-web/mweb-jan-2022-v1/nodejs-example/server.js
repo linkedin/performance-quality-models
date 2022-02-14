@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
-const { MWebMay2020Predictor } = require('./predictors');
+const { MWebJan2022Predictor } = require('./predictors');
 
 async function main() {
   // load the model so it's ready
-  const predictor = new MWebMay2020Predictor(__dirname + '/../models/nodejs-saved-model');
+  const predictor = new MWebJan2022Predictor(__dirname + '/../models/nodejs-saved-model');
   await predictor.loadModel();
 
   // Make all the files in 'www' available.
