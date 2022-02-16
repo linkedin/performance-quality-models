@@ -3,11 +3,17 @@
 
 # # SSR Mobile Web Model Python Demo
 
-# We'll see how to load the mweb-may-2020-v1 predictor and make predictions with it in Python. As a bonus, we also share a playground to play with the model and get a feel for its performance. The interactive UI demo only works in a notebook interface.
+# We'll see how to load the mweb-jan-2022-v1 predictor and make predictions with it in Python. As a bonus, we also share a playground to play with the model and get a feel for its performance. The interactive UI demo only works in a notebook interface.
 # 
 # Simply run all the cells below to get started. 
 
-get_ipython().system(' pip install -U -q tensorflow==2.2 jupyter-dash pandas')
+# In[ ]:
+
+
+get_ipython().system(' pip install -U -q pip && pip install -U -q tensorflow==2.5 dash==2.0.0 jupyter-dash==0.4.0 pandas==1.4.1')
+
+
+# In[1]:
 
 
 import re
@@ -24,10 +30,16 @@ from dash.dependencies import Input, Output
 tf.__version__
 
 
+# In[2]:
+
+
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s %(message)s')
 
 
-class MWebMay2020Predictor:
+# In[3]:
+
+
+class MWebJan2022Predictor:
     def __init__(self, modelDir):
         self.modelDir = modelDir;
         self.modelName = Path(modelDir).name
@@ -39,29 +51,23 @@ class MWebMay2020Predictor:
           'browser_major_version_na',
           'browser_name',
           'country_code',
-          'dataCenter',
-          'osFamily',
-          'osMajor',
-          'osMajor_na',
-          'popId'
+          'osfamily',
+          'osmajor',
+          'osmajor_na'
         ]
 
-
-        # As saved in /jobs/nqsdev/lite/phase3/production_models/may-2020-model/best_model_nqs-lite-p30-cut-run2__HYPEROPT_AHB_60_SAMPLES_40_ITERATIONS/tfms-fixed.pickle for /jobs/nqsdev/lite/phase3/model_training_results/May2020-nqs-web-mapper-data/nqs-lite-p30-cut-run2__HYPEROPT_AHB_60_SAMPLES_40_ITERATIONS/ray_results/workspace/deepthought/nqs/src/linkedin/nqs/kong_model_training/tensorboard_data/ray_results/HYPEROPT_AHB_60_SAMPLES_40_ITERATIONS/DenseNQSModel_16_asn_hash_buckets=2201,batch_size=4096,cols_in_csv_file_order=['asn_number', 'country_code', 'popId', 'osFamily', _2020-06-30_00-25-161lyqlcwm/est_model_dir model
         self._defaults = {
-          "browser_major_version": 75.0,
-          "osMajor": 11.0,
-          "asn_number": '**',
-          "country_code": '**',
-          "browser_name": '**',
-          "osFamily": '**',
-          "popId": '**',
-          "dataCenter": '**'
+            "browser_major_version": 15.0, 
+            "osmajor": 14.0,
+            "asn_number": '**',
+            "country_code": '**',
+            "browser_name": '**',
+            "osfamily": '**',
         }
 
         self._normalizer = {
-          "means": {"browser_major_version": 776.7030035555556, "osMajor": 10.416319973334147},
-          "stds": {"browser_major_version": 120559.96265890554, "osMajor": 2.4117271070878434}
+            "means": {"browser_major_version": 52.65782220933843, "osmajor": 13.372263709715911}, 
+            "stds": {"browser_major_version": 41.48294747389074, "osmajor": 2.376855002582524}
         }
 
     def loadModel(self):
@@ -88,13 +94,13 @@ class MWebMay2020Predictor:
 
     def _addNAFetaures(self, x):
         x["browser_major_version_na"] = 'False';
-        x["osMajor_na"] = 'False';
+        x["osmajor_na"] = 'False';
 
         if self._checkNA(x["browser_major_version"]):
             x["browser_major_version_na"] = 'True';
 
-        if self._checkNA(x["osMajor"]):
-            x["osMajor_na"] = 'True';
+        if self._checkNA(x["osmajor"]):
+            x["osmajor_na"] = 'True';
 
         return x;
     
@@ -107,15 +113,13 @@ class MWebMay2020Predictor:
     def prepareX(self, inp_example):
         model_input = tf.train.Example(features=tf.train.Features(feature={
             'country_code': tf.train.Feature(bytes_list=tf.train.BytesList(value=[inp_example["country_code"]])),
-            'popId': tf.train.Feature(bytes_list=tf.train.BytesList(value=[inp_example["popId"]])),
-            'osFamily': tf.train.Feature(bytes_list=tf.train.BytesList(value=[inp_example["osFamily"]])),
+            'osfamily': tf.train.Feature(bytes_list=tf.train.BytesList(value=[inp_example["osfamily"]])),
             'browser_name': tf.train.Feature(bytes_list=tf.train.BytesList(value=[inp_example["browser_name"]])),
-            'dataCenter': tf.train.Feature(bytes_list=tf.train.BytesList(value=[inp_example["dataCenter"]])),
             'browser_major_version_na': tf.train.Feature(bytes_list=tf.train.BytesList(value=[inp_example["browser_major_version_na"]])),
-            'osMajor_na': tf.train.Feature(bytes_list=tf.train.BytesList(value=[inp_example["osMajor_na"]])),
+            'osmajor_na': tf.train.Feature(bytes_list=tf.train.BytesList(value=[inp_example["osmajor_na"]])),
             'asn_number': tf.train.Feature(bytes_list=tf.train.BytesList(value=[inp_example["asn_number"]])),
             'browser_major_version': tf.train.Feature(float_list=tf.train.FloatList(value=[inp_example["browser_major_version"]])),
-            'osMajor': tf.train.Feature(float_list=tf.train.FloatList(value=[inp_example["osMajor"]]))
+            'osmajor': tf.train.Feature(float_list=tf.train.FloatList(value=[inp_example["osmajor"]]))
         }))
         return model_input.SerializeToString()
 
@@ -148,38 +152,56 @@ class MWebMay2020Predictor:
         return output
 
 
+# In[4]:
+
+
 def make_prediction(predictor, inp):
     p = predictor.predict(inp)
     scores = p['probabilities'].numpy()[0]
     return {i: score for i, score in enumerate(scores)} # return the probability for each class
 
 
+# In[5]:
+
+
 # the below model is the TF Python equivalent of JS' saved model
 MODEL_PATH = "../models/py-saved-model/"
 
 
-predictor = MWebMay2020Predictor(MODEL_PATH)
+# In[6]:
+
+
+predictor = MWebJan2022Predictor(MODEL_PATH)
 predictor.loadModel()
 
 
 # Make some predictions
 
+# In[ ]:
+
+
 make_prediction(predictor, 
     {
         'asn_number': '40793',  'browser_major_version': '67',  'browser_name': 'chrome',  
-         'country_code': 'us',  'dataCenter': '**',  'osFamily': 'Android',  'osMajor': '6',  'popId': '**'
+         'country_code': 'us',  'osfamily': 'Android',  'osmajor': '6'
     }
 )
 
 
 # Some example inputs to try, while getting started,
 # ```json
-# {'asn_number': '40793',  'browser_major_version': '67',  'browser_name': 'chrome',  'country_code': 'us',  'dataCenter': '**',  'osFamily': 'Android',  'osMajor': '6',  'popId': '**'}
-# {'asn_number': '3352',  'browser_major_version': '13',  'browser_name': 'safari',  'country_code': 'es',  'dataCenter': '**',  'osFamily': 'iOS',  'osMajor': '13',  'popId': '**'}
-# {'asn_number': '40793',  'browser_major_version': '67',  'browser_name': 'chrome',  'country_code': 'us',  'dataCenter': '**',  'osFamily': 'Android',  'osMajor': '6',  'popId': '**'}
+# {'asn_number': '40793',  'browser_major_version': '67',  'browser_name': 'chrome',  'country_code': 'us',  
+#     'osfamily': 'Android',  'osmajor': '6'}
+# {'asn_number': '3352',  'browser_major_version': '13',  'browser_name': 'safari',  'country_code': 'es',  
+#     'osfamily': 'iOS',  'osmajor': '13'}
+# {'asn_number': '40793',  'browser_major_version': '67',  'browser_name': 'chrome',  'country_code': 'us',  
+#     'osfamily': 'Android',  'osmajor': '6'}
 # ```
 
 # ## Interactive UI
+
+# In[7]:
+
 
 def design_inline_form_control(label:str, input_type:str="text", default_val="", readonly=False):
     input_id = re.sub(r"\s+", "", label)
@@ -195,6 +217,9 @@ def design_inline_form_control(label:str, input_type:str="text", default_val="",
     return div, input_id
 
 
+# In[13]:
+
+
 app = JupyterDash(__name__, external_stylesheets=["https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"])
 
 asn_div, a_id = design_inline_form_control("ASN number", "number", 3352)
@@ -203,14 +228,12 @@ browser_name_div, bn_id = design_inline_form_control("Browser name", default_val
 country_div, cc_id = design_inline_form_control("Country code", default_val='ca')
 os_family_div, os_id = design_inline_form_control("OS Family", default_val='iOS')
 os_major_div, osm_id = design_inline_form_control("OS Major version", "number", 14)
-dc_div, _ = design_inline_form_control("Datacenter", default_val="**", readonly=True)
-pop_div, _ = design_inline_form_control("POP", default_val="**", readonly=True)
         
 app.layout = html.Div([
     html.H1("Performance Quality Predictor", className="mb-5"),
     html.P("The model is live and ready! Try changing any of the values below and see the prediction at the end.", className="text-muted"),
     html.Div([
-        asn_div, browser_version_div, browser_name_div, country_div, os_family_div, os_major_div, dc_div, pop_div
+        asn_div, browser_version_div, browser_name_div, country_div, os_family_div, os_major_div
     ]),
     html.P([
         "The model thinks the performance quality for the above request to be, ",
@@ -233,10 +256,8 @@ def update_figure(asn_number:int, browser_version:int, browser_name:str, country
         'browser_major_version': browser_version,
         'browser_name': browser_name,
         'country_code': country_code,
-        'dataCenter': '**',
-        'osFamily': os_family,
-        'osMajor': os_major,
-        'popId': '**'
+        'osfamily': os_family,
+        'osmajor': os_major,
     }
     pred = make_prediction(predictor, inp)
     good_prob = pred[0]
@@ -248,6 +269,9 @@ def update_figure(asn_number:int, browser_version:int, browser_name:str, country
 
 # Run app and display result inline in the notebook
 app.run_server(mode='inline', height=630)
+
+
+# In[ ]:
 
 
 

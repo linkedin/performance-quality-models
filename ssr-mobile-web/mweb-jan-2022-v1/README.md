@@ -17,7 +17,7 @@ The model was built and trained from around 25M random samples of LinkedIn Liteâ
 
 OS and browser info is extracted from the user agent using the [UA Parser library](https://mvnrepository.com/artifact/com.github.ua-parser/uap-java/1.4.3). Using any other way to extract this information may work but it may lead to [train-serve data skew](https://www.tensorflow.org/tfx/data_validation/get_started#checking_data_skew_and_drift).
 
-Using [Digital Element](https://www.digitalelement.com/resources/faq/)'s Jan 2022 database, we extracted ASN numbers from IP Address. You may have to purchase their license to be absolutely match to what we did. However, any such accurate translation service should work. While trying out our demos, use any free website like [this one](https://hackertarget.com/as-ip-lookup/) or [this one](https://mxtoolbox.com/asn.aspx) to obtain the ASN number for the IP Address of your interest. 
+Using [Digital Element](https://www.digitalelement.com/resources/faq/)'s Jan 2022 database, we extracted ASN numbers from IP Addresses. You may have to purchase their license to be absolutely match to what we did. However, any such accurate translation service should work. While trying out our demos, use any free website like [this one](https://hackertarget.com/as-ip-lookup/) or [this one](https://mxtoolbox.com/asn.aspx) to obtain the ASN number for the IP Address of your interest. 
 
 ### Model Output
 
