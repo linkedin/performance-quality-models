@@ -7,13 +7,13 @@
 # 
 # Simply run all the cells below to get started. 
 
-# In[ ]:
-
-
-get_ipython().system(' pip install -U -q pip && pip install -U -q tensorflow==2.5 dash==2.0.0 jupyter-dash==0.4.0 pandas==1.4.1')
-
-
 # In[1]:
+
+
+get_ipython().system(' pip install -U -q pip && pip install -U -q tensorflow==2.5 pandas')
+
+
+# In[2]:
 
 
 import re
@@ -22,21 +22,49 @@ from pathlib import Path
 
 import tensorflow as tf
 
-from jupyter_dash import JupyterDash
-from dash import dcc
-from dash import html
-from dash.dependencies import Input, Output
-
 tf.__version__
 
 
-# In[2]:
-
-
-logging.basicConfig(level=logging.ERROR, format='%(asctime)s %(message)s')
-
-
 # In[3]:
+
+
+logging.basicConfig(level=logging.WARNING, format='%(asctime)s %(message)s')
+
+
+# In[11]:
+
+
+# the below model is the TF Python equivalent of JS' saved model
+MODEL_PATH = "../models/py-saved-model"
+
+
+# Setup the notebook for Google Colab. This cell can be ignored if not on colab.google.com
+
+# In[6]:
+
+
+try:
+    import google.colab
+    import subprocess
+    
+    clone_cmd_res = subprocess.run(
+      "git clone -l -s https://github.com/linkedin/performance-quality-models.git performance-quality-models",
+      shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True
+    )
+    
+    if clone_cmd_res.returncode != 0:
+        raise Exception(clone_cmd_res.stderr)
+    
+    get_ipython().run_line_magic('cd', 'performance-quality-models')
+    
+    MODEL_PATH = "./ssr-mobile-web/mweb-jan-2022-v1/models/py-saved-model"
+except:
+    logging.warning("Ignore this warning if not on colab.google.com", exc_info=True)
+
+
+# Define a Predictor class which loads the model and transforms the data into a form that model can understand.
+
+# In[7]:
 
 
 class MWebJan2022Predictor:
@@ -152,7 +180,7 @@ class MWebJan2022Predictor:
         return output
 
 
-# In[4]:
+# In[8]:
 
 
 def make_prediction(predictor, inp):
@@ -161,14 +189,7 @@ def make_prediction(predictor, inp):
     return {i: score for i, score in enumerate(scores)} # return the probability for each class
 
 
-# In[5]:
-
-
-# the below model is the TF Python equivalent of JS' saved model
-MODEL_PATH = "../models/py-saved-model/"
-
-
-# In[6]:
+# In[12]:
 
 
 predictor = MWebJan2022Predictor(MODEL_PATH)
@@ -177,7 +198,7 @@ predictor.loadModel()
 
 # Make some predictions
 
-# In[ ]:
+# In[13]:
 
 
 make_prediction(predictor, 
@@ -187,6 +208,10 @@ make_prediction(predictor,
     }
 )
 
+
+# A result, `{0: 0.0106238695, 1: 0.9893762}` implies that the model is 98.94% sure that the given is input configuration of the device and network will have **poor** performance quality (i.e page load time > 950ms). In this case we disable all aggresive optimizations. 
+# 
+# To read it the other way, the model is 1.06% sure (LOL) that the input configuration has a **good** performance, i.e. page load time <= 950ms.
 
 # Some example inputs to try, while getting started,
 # ```json
@@ -199,8 +224,25 @@ make_prediction(predictor,
 # ```
 
 # ## Interactive UI
+# 
+# To understand the model's behavior a bit more, use the below interactive UI. The model predicts on every keystroke. We can afford to do it, because it is so fast!
 
-# In[7]:
+# In[14]:
+
+
+get_ipython().system(' pip install -U -q pip && pip install -U -q dash==2.0.0 jupyter-dash==0.4.0')
+
+
+# In[15]:
+
+
+from jupyter_dash import JupyterDash
+from dash import dcc
+from dash import html
+from dash.dependencies import Input, Output
+
+
+# In[16]:
 
 
 def design_inline_form_control(label:str, input_type:str="text", default_val="", readonly=False):
@@ -217,7 +259,7 @@ def design_inline_form_control(label:str, input_type:str="text", default_val="",
     return div, input_id
 
 
-# In[13]:
+# In[17]:
 
 
 app = JupyterDash(__name__, external_stylesheets=["https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"])

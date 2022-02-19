@@ -26,7 +26,7 @@ The model is trained to return the page load time class. For now, we have two cl
 1. Less than 1300ms and
 2. Greater than or equal to 1300ms, 
 
-but we may expand them to more classes in the future based on the use cases. As shown in the [ssr-mobile-web-modile-demo.pynb](python-example/ssr-mobile-web-model-demo.ipynb) example, the [TF predictor](https://github.com/tensorflow/tensorflow/blob/63f17d0fe1192eff0aa47faae5d15ec7aa02490a/tensorflow/python/saved_model/load.py#L850) returns a probability distribution of these PLT classes. We could simply pick the class with the highest probability as the model’s prediction. SavedModels from Estimators section from this [guide](https://github.com/tensorflow/docs/blob/e9f1ce05852b13e9335860d93aa28f0782b60ddc/site/en/guide/estimator.ipynb) is another end to end example of this pattern.
+but we may expand them to more classes in the future based on the use cases. As shown in the [ssr-mobile-web-modile-demo.pynb](python-example/ssr_mobile_web_model_demo.ipynb) example, the [TF predictor](https://github.com/tensorflow/tensorflow/blob/63f17d0fe1192eff0aa47faae5d15ec7aa02490a/tensorflow/python/saved_model/load.py#L850) returns a probability distribution of these PLT classes. We could simply pick the class with the highest probability as the model’s prediction. SavedModels from Estimators section from this [guide](https://github.com/tensorflow/docs/blob/e9f1ce05852b13e9335860d93aa28f0782b60ddc/site/en/guide/estimator.ipynb) is another end to end example of this pattern.
 
 ## How to use it
 
