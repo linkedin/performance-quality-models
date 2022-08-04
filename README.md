@@ -20,6 +20,7 @@ If you use server side rendering or static file server techniques to serve your 
 - [mweb-jan-2022-v1](ssr-mobile-web/mweb-jan-2022-v1/)
 
 ## Tech Talks & Blogs 
+- [How LinkedIn Personalized Performance for Millions of Members using TensorFlow.js](https://blog.tensorflow.org/2022/03/how-linkedin-personalized-performance.html?linkId=8049742) published in March 2022 by Google talks about a clever way to deploy these models into production without any complex AI stack
 - [Understanding network quality: The rise of customized content delivery](https://engineering.linkedin.com/blog/2019/06/understanding-network-quality--the-rise-of-customized-content-de)
 - [Personalizing Performance: Adapting Application in real time to member environments](https://www.linkedin.com/pulse/personalizing-performance-adapting-application-real-time-pasumarthy/)
 - [Discussions with W3C on the future of Netinfo](https://docs.google.com/document/d/1GQpM8IvL4feXQ0oQdCQIPKhZZkMLNTYJQhBUntMxPkI/edit#heading=h.rudaey4ntcqb)
