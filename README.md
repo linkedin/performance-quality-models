@@ -23,7 +23,7 @@ If you use server side rendering or static file server techniques to serve your 
 - [How LinkedIn Personalized Performance for Millions of Members using TensorFlow.js](https://blog.tensorflow.org/2022/03/how-linkedin-personalized-performance.html?linkId=8049742) published in March 2022 by Google talks about a clever way to deploy these models into production without any complex AI stack
 - [Understanding network quality: The rise of customized content delivery](https://engineering.linkedin.com/blog/2019/06/understanding-network-quality--the-rise-of-customized-content-de)
 - [Personalizing Performance: Adapting Application in real time to member environments](https://www.linkedin.com/pulse/personalizing-performance-adapting-application-real-time-pasumarthy/)
-- [Discussions with W3C on the future of Netinfo](https://docs.google.com/document/d/1GQpM8IvL4feXQ0oQdCQIPKhZZkMLNTYJQhBUntMxPkI/edit#heading=h.rudaey4ntcqb)
+- [Discussions with W3C on the future of Netinfo](https://w3c.github.io/web-performance/meetings/2021/2021-10-TPAC/index.html#h.rudaey4ntcqb)
 - How LinkedIn uses AI to optimize performance for every member​ at Facebook Performance Summit in 2019 - [slides](https://microsoft-my.sharepoint.com/:p:/g/personal/pvijayan_linkedin_biz/Ebt_xi0Yf7NBszIUAj9RmGkBKnssSp2qAQF0Qy0qdLJvPw?e=dw1Eov) | [recording](https://www.youtube.com/watch?v=4A13Pzal8Hg)
 - AutoML to find the best PQMs at Ray Summit in 2020 - [slides](http://bit.ly/ray-at-linkedin) | [recording](https://youtu.be/0Z0Th9ySIfs?t=761)
 
